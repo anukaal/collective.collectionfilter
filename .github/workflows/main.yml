@@ -163,7 +163,7 @@ jobs:
           flag-name: ${{ matrix.plone-version }}-${{ matrix.python-version }}-${{ matrix.layer }}
       - name: code-analysis
         if: always()
-        run: echo "${{ matrix.plone-version }}" | grep 5.1 || bin/code-analysis
+        run: echo "${{ matrix.plone-version }}" | grep 5.2 || bin/code-analysis
       - name: black
         if: ${{ matrix.python-version == '3.9' }}
         run: |
