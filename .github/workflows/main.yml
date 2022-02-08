@@ -167,7 +167,7 @@ jobs:
       - name: black
         if: ${{ matrix.python-version == '3.9' }}
         run: |
-          pip install "black==22.1.0"
+          pip install "black==21.12b0"
           black --check src
       - name: Artifact Robot Test Report
         if: failure()
