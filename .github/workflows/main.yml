@@ -110,12 +110,12 @@ jobs:
             echo "download-cache = $HOME/buildout-cache/downloads" >> $HOME/.buildout/default.cfg
             echo "eggs-directory = $HOME/buildout-cache/eggs" >> $HOME/.buildout/default.cfg
       - name: bootstrap buildout (old-school)
-        if: ${{ matrix.plone-version in ['5.0', 5.1] }}
+        if: ${{ matrix.plone-version == '5.0' || matrix.plone-version == '5.1' }}
         run: |
           ./bootstrap.sh test-${{ matrix.plone-version }}.x.cfg
           ls -al
       - name: bootstrap buildout (new-way)
-        if: ${{ matrix.plone-version not in ['5.0', 5.1] }}
+        if: ${{ matrix.plone-version == '5.2' || matrix.plone-version == '6.0' }}
         run: |
           bin/pip install -r requirements-${{ matrix.plone-version }}.x.txt
           ls -al
