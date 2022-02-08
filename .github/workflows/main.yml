@@ -117,6 +117,7 @@ jobs:
       - name: bootstrap buildout (new-way)
         if: ${{ matrix.plone-version == '5.2' || matrix.plone-version == '6.0' }}
         run: |
+          python -m venv .
           bin/pip install -r requirements-${{ matrix.plone-version }}.x.txt
           ls -al
       - name: buildout
