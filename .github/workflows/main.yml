@@ -43,7 +43,7 @@ jobs:
             python-version: 3.7
           - plone-version: 5.1
             python-version: 3.8
-          - plone-version: 5.0
+          - plone-version: 5.1
             python-version: 3.9
           # 5.2 does not run on 3.9
           - plone-version: 5.2
