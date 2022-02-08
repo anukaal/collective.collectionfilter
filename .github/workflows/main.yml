@@ -164,7 +164,7 @@ jobs:
         if: always()
         run: echo "${{ matrix.plone-version }}" | grep 5.1 || bin/code-analysis
       - name: black
-        if: ${{ matrix.python-version == '3.8' }}
+        if: ${{ matrix.python-version == '3.9' }}
         run: |
           pip install "black==22.1.0"
           black --check src
