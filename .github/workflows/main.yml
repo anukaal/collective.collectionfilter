@@ -48,6 +48,11 @@ jobs:
           # 5.2 does not run on 3.9
           - plone-version: 5.2
             python-version: 3.9
+          # 6.0 does not run on 2.7/3.6
+          - plone-version: 6.0
+            python-version: 2.7
+          - plone-version: 6.0
+            python-version: 3.6
           # Save some time by not running all the robot tests
           - python-version: 3.6
             layer: Portlet_AjaxDisabled
