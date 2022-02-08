@@ -15,7 +15,8 @@ jobs:
           - '5.0'
           - '5.1'
           - '5.2'
-        python-version: ['2.7', '3.6', '3.7', '3.8']
+          - '6.0'
+        python-version: ['2.7', '3.6', '3.7', '3.8', '3.9']
         layer:
           - Portlet_AjaxDisabled
           - Portlet_AjaxEnabled
@@ -34,12 +35,19 @@ jobs:
             python-version: 3.7
           - plone-version: 5.0
             python-version: 3.8
+          - plone-version: 5.0
+            python-version: 3.9
           - plone-version: 5.1
             python-version: 3.6
           - plone-version: 5.1
             python-version: 3.7
           - plone-version: 5.1
             python-version: 3.8
+          - plone-version: 5.0
+            python-version: 3.9
+          # 5.2 does not run on 3.9
+          - plone-version: 5.2
+            python-version: 3.9
           # Save some time by not running all the robot tests
           - python-version: 3.6
             layer: Portlet_AjaxDisabled
@@ -56,7 +64,9 @@ jobs:
             coverage: coverage
           - plone-version: 5.2
             coverage: no_coverage
-          
+          - plone-version: 6.0
+            coverage: coverage
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -110,12 +120,12 @@ jobs:
             chromedriver --url-base=/wd/hub &
             sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
             sleep 3
-            bin/test --all  --layer ${{ matrix.layer }} --list-tests            
+            bin/test --all  --layer ${{ matrix.layer }} --list-tests
             bin/test --all  --layer ${{ matrix.layer }}
       - name: test unit
         if: ${{ matrix.coverage != 'coverage' && matrix.layer == 'unit' }}
         run: |
-            bin/test --unit --list-tests            
+            bin/test --unit --list-tests
             bin/test --unit
       - name: createcoverage
         if: ${{ matrix.coverage == 'coverage' && matrix.layer != 'unit' }}
@@ -124,13 +134,13 @@ jobs:
             chromedriver --url-base=/wd/hub &
             sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
             sleep 3
-            bin/test --all  --layer ${{ matrix.layer }} --list-tests            
+            bin/test --all  --layer ${{ matrix.layer }} --list-tests
             bin/createcoverage -t '--all --layer ${{ matrix.layer }}'
             bin/coverage json -i
       - name: createcoverage
         if: ${{ matrix.coverage == 'coverage' && matrix.layer == 'unit' }}
         run: |
-            bin/test --unit --list-tests            
+            bin/test --unit --list-tests
             bin/createcoverage -t '--unit'
             bin/coverage json -i
       - name: Coveralls
@@ -145,7 +155,7 @@ jobs:
       - name: black
         if: ${{ matrix.python-version == '3.8' }}
         run: |
-          pip install black
+          pip install "black==22.1.0"
           black --check src
       - name: Artifact Robot Test Report
         if: failure()
