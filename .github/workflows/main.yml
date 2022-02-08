@@ -115,7 +115,7 @@ jobs:
           ./bootstrap.sh test-${{ matrix.plone-version }}.x.cfg
           ls -al
       - name: bootstrap buildout (new-way)
-        if: ${{ matrix.plone-version != '2.7' }}
+        if: ${{ matrix.python-version != '2.7' }}
         run: |
           python -m venv .
           bin/pip install -r requirements-${{ matrix.plone-version }}.x.txt
